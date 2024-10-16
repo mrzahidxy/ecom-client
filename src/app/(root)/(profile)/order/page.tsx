@@ -33,9 +33,10 @@ const OrdersPage = (props: Props) => {
       accessorKey: "id",
       header: "Id",
       cell: ({ row }) => {
-
-        console.log(row)
-        return <Link href={`/order/${row.original.id}`}>{row?.original?.id}</Link>;
+        console.log(row);
+        return (
+          <Link href={`/order/${row.original.id}`}>{row?.original?.id}</Link>
+        );
       },
     },
     {
@@ -55,7 +56,7 @@ const OrdersPage = (props: Props) => {
   return (
     <div className="container">
       <h4 className="font-semibold text-xl">Orders List</h4>
-      <DataTable hideButtton={true} columns={columns} data={orders} />
+      <DataTable columns={columns} data={orders} />
     </div>
   );
 };
