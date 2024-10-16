@@ -113,7 +113,7 @@ const Profile = (props: Props) => {
         <div className="md:col-span-2 bg-white shadow rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
           <h4>Recent Orders</h4>
-          <DataTable hideButtton={true} columns={columns} data={orders} />
+          <DataTable  columns={columns} data={orders} />
         </div>
       </div>
     </div>
