@@ -1,64 +1,59 @@
 "use client";
 
-import { DataTable } from "@/components/ui/data-table.component";
 import { DialogContent } from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
-import privateRequest from "@/healper/privateRequest";
-import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
-import { Edit2, EditIcon } from "lucide-react";
+import { EditIcon } from "lucide-react";
 import Link from "next/link";
 
 // Define the product interface to type the data
 interface Product {
-  id: string;
+  id: number;
   name: string;
   description: string;
-  price: number;
-  image: string;
-}
-
-// Define the API response structure
-interface ProductResponse {
-  data: {
-    data: Product[];
-  };
+  price: string;
+  tags: string;
+  image: string | null;
+  createdAt: string;
+  updateAt: string;
 }
 
 // Separate component for rendering the image in a table cell
-const ImageCell: React.FC<{ row: { original: Product } }> = ({ row }) => (
-  <Dialog>
-    <DialogTrigger asChild>
-      <Image
-        width={60}
-        height={60}
-        alt={`Image of ${row.original.name}`}
-        src={row.original.image}
-        className="cursor-pointer"
-      />
-    </DialogTrigger>
-    <DialogContent>
-      <Image
-        width={400}
-        height={400}
-        alt={`Image of ${row.original.name}`}
-        src={row.original.image}
-        className="w-full h-auto"
-      />
-    </DialogContent>
-  </Dialog>
-);
+const ImageCell: React.FC<{ row: { original: Product } }> = ({ row }) => {
+  const imageUrl = row.original.image || "/placeholder-image.png"; // Fallback if image is null
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Image
+          width={60}
+          height={60}
+          alt={`Image of ${row.original.name}`}
+          src={imageUrl}
+          className="cursor-pointer"
+        />
+      </DialogTrigger>
+      <DialogContent>
+        <Image
+          width={400}
+          height={400}
+          alt={`Image of ${row.original.name}`}
+          src={imageUrl}
+          className="w-full h-auto"
+        />
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 // Define the columns for the DataTable
 const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "image",
     header: "Image",
-    cell: ImageCell,
+    cell: ({ row }) => <ImageCell row={row} />,
   },
   {
     accessorKey: "name",
@@ -75,21 +70,19 @@ const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "action",
     header: "Action",
-    cell: ({ row }) => {
-      return (
-        <div>
-          <Link href={`/admin/products/edit/${row.original.id}`}>
-            <EditIcon />
-          </Link>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div>
+        <Link href={`/admin/products/edit/${row.original.id}`}>
+          <EditIcon />
+        </Link>
+      </div>
+    ),
   },
 ];
 
 const ProductPage: React.FC = () => {
   return (
-    <DynamicTable
+    <DynamicTable<Product>
       title="Products"
       url="/products"
       buttonText="Add Product"

@@ -19,9 +19,6 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  hideButtton?: boolean;
-  title?: string;
-  buttonText?: string;
 }
 
 export function DataTable<TData, TValue>({
