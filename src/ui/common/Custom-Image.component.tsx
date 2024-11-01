@@ -18,9 +18,13 @@ export const CustomImage = ({
       className={`relative w-24 h-24 ${className}`}
       style={{ width: width, height: height }}
     >
-      <Image src={src} alt="" layout="fill" objectFit="cover" />
+      <Image
+        src={src}
+        alt=""
+        style={{
+          objectFit: "cover",
+        }}
+      />
     </div>
   );
 };
-
-

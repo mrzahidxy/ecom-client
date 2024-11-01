@@ -5,21 +5,23 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Navbar } from "../(root)/Navbar.component";
 import Sidebar from "./Sidebar.component";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { status, data } = useSession();
   const router = useRouter();
   const userRole = data?.user?.role;
 
   useEffect(() => {
-    if (status === "unauthenticated" || (status === "authenticated" && userRole !== "ADMIN")) {
-      router.push("/"); // Redirect if not authenticated or not an admin
+    if (status === "unauthenticated" && userRole !== "ADMIN") {
+      router.push("/auth/login");
     }
-  }, [status, userRole, router]);
+  }, [status, userRole]);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col h-screen">

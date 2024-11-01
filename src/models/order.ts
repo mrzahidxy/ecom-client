@@ -17,4 +17,28 @@ export interface TOrder {
     createdAt: string;
     updatedAt: string;
   }
+
+
+
+export interface TCartProduct  {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    tags: string;
+    image: string;
+    createdAt: string;
+    updateAt: string;
+};
+
+export interface TCartOrder  {
+    id: number;
+    userId: number;
+    productId: number;
+    quantity: number;
+    createdAt: string;
+    updatedAt: string;
+    product: TCartProduct;
+};
+
   

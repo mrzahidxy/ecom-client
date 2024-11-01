@@ -5,9 +5,11 @@ export const MainBanner = () => {
     <div className="h-96 relative my-4">
       <Image
         src="/images/add.jpg"
-        fill={true}
+        fill
+        style={{
+          objectFit: 'cover', 
+        }}
         alt="main-banner"
-        objectFit="cover"
       />
     </div>
   );

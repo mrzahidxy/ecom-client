@@ -2,6 +2,7 @@ import React from "react";
 import { Field, FieldProps, GenericFieldHTMLAttributes } from "formik";
 import { FieldContainer } from "./field-container.component";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 type InputFieldProps = {
   type?: string; // Added type with default to "text"
@@ -26,13 +27,24 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <FieldContainer>
       {label && <label>{label}</label>}
-      <Input
-        type={type}
-        placeholder={placeholder}
-        className={inputClassName}
-        disabled={disabled}
-        {...rest}
-      />
+
+      {type === "textarea" ? (
+        <Textarea
+          placeholder={placeholder}
+          className={inputClassName}
+          disabled={disabled}
+          {...rest}
+        />
+      ) : (
+        <Input
+          type={type}
+          placeholder={placeholder}
+          className={inputClassName}
+          disabled={disabled}
+          {...rest}
+        />
+      )}
+      
       {error && <small className="text-red-600 text-xs">{helperText}</small>}
       {!error && helperText && <small>{helperText}</small>}
     </FieldContainer>
@@ -55,7 +67,8 @@ export const FormikInputField: React.FC<FormikInputFieldProps> = ({
         meta: { touched, error },
         form: { isSubmitting },
       }: FieldProps) => {
-        const helperText = touched && error ? error : inputFieldProps?.helperText;
+        const helperText =
+          touched && error ? error : inputFieldProps?.helperText;
 
         return (
           <InputField

@@ -25,6 +25,7 @@ export function ProductForm({ error }: LoginFormProps) {
           inputFieldProps={{
             placeholder: "Description",
             inputClassName: "öutlined-none py-3",
+            type: "textarea",
           }}
         />
 

@@ -2,97 +2,62 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FiMenu, FiShoppingCart } from "react-icons/fi";
-import { Sidebar } from "./Siebar.component";
+import { FiShoppingCart } from "react-icons/fi";
 import { signOut, useSession } from "next-auth/react";
 import { CiLogin } from "react-icons/ci";
 import useCartStore from "@/store/useStore";
 
-type Props = {};
-
-export const Navbar = (props: Props) => {
-  const { data: session, status } = useSession();
-  const [dropdownVisible, setDropDownVisible] = useState<boolean>(false);
-  const [showSidebar, setShowSidebar] = useState<boolean>(false);
-  const [fixedNavbar, setFixedNavbar] = useState<number>(0);
-  const cartItems = useCartStore((state) => state.cartItems);
-
-  const cartItemsCount = cartItems.length;
-
-  // /console.log(cartItems)
-
-  const handleDropdownClick = () => {
-    setDropDownVisible(!dropdownVisible);
-  };
-
-  const handleScrollHeight = () => {
-    setFixedNavbar(window.scrollY);
-  };
+export const Navbar: React.FC = () => {
+  const { data: session } = useSession();
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isFixedNavbar, setIsFixedNavbar] = useState(false);
+  const cartItemsCount = useCartStore((state) => state.cartItems.length);
 
   useEffect(() => {
-    addEventListener("scroll", handleScrollHeight);
+    const handleScroll = () => setIsFixedNavbar(window.scrollY > 100);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleDropdown = () => setIsDropdownVisible((prev) => !prev);
 
   return (
     <nav
       className={`w-full py-3 px-3 md:px-10 shadow-md ${
-        fixedNavbar > 100 ? "fixed z-50 bg-white" : ""
+        isFixedNavbar ? "fixed z-50 bg-white" : ""
       }`}
     >
-      <div className="flex flex-row justify-between items-center container">
-        <Link
-          href="/"
-          className="flex items-center gap-1 text-2xl font-semibold"
-        >
-          <FiShoppingCart className=" text-blue-500" /> Buynow
-        </Link>
-        {showSidebar && <Sidebar setShowSidebar={setShowSidebar} />}
+      <div className="flex justify-between items-center container">
+        <a href="/" className="flex items-center gap-1 text-2xl font-semibold">
+          <FiShoppingCart className="text-blue-500" /> Buynow
+        </a>
 
-        <button
-          className="block md:hidden"
-          onClick={() => setShowSidebar((prevShowSidebar) => !prevShowSidebar)}
-        >
-          <FiMenu />
-        </button>
-
-        <div className="hidden md:flex gap-6 items-center cursor-pointer text-2xl">
-          <div className="flex flex-row items-center gap-1 relative group">
-            <Link href="/cart" className="flex items-center relative">
+        <div className="hidden md:flex items-center gap-6">
+          <Link href="/cart" className="relative text-xl flex items-center">
+            <FiShoppingCart />
+            {cartItemsCount > 0 && (
               <span className="absolute left-5 bottom-3 text-xs bg-blue-500 text-white px-1 rounded-full">
                 {cartItemsCount}
-              </span>{" "}
-              <FiShoppingCart />
-            </Link>
-          </div>
+              </span>
+            )}
+          </Link>
 
           {session?.user ? (
-            <div
-              className="relative group flex gap-1 items-center"
-              onClick={handleDropdownClick}
-            >
-              {/* <Image width={100} height={100} alt=""
-                  src="https://fakeimg.pl/200/"
-                  className="w-6 h-6 rounded-full cursor-pointer"
-                /> */}
-              <span className="text-lg">{session?.user?.name}</span>
-
-              {dropdownVisible && (
-                <div className="z-10 absolute right-0 mt-2 py-2 w-36 bg-white border border-gray-300 rounded shadow-lg top-[30px]">
-                  <Link
-                    href={"/profile"}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
+            <div className="relative flex items-center gap-1">
+              <button onClick={toggleDropdown} className="text-lg">
+                {session.user.name}
+              </button>
+              {isDropdownVisible && (
+                <div className="absolute z-50 right-[-10px]  top-[30px] mt-2 py-2 w-36 bg-white border border-gray-300 rounded shadow-lg">
+                  <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Profile
                   </Link>
-                  <Link
-                    href={"/order"}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
+                  <Link href="/order" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Orders
                   </Link>
                   <button
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => signOut()}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Logout
                   </button>
@@ -100,10 +65,7 @@ export const Navbar = (props: Props) => {
               )}
             </div>
           ) : (
-            <Link
-              className="text-sm flex items-center font-semibold space-x-2"
-              href={"/auth/login"}
-            >
+            <Link href="/auth/login" className="flex items-center text-sm font-semibold">
               <CiLogin className="text-xl" />
               <span>Login</span>
             </Link>
@@ -113,3 +75,5 @@ export const Navbar = (props: Props) => {
     </nav>
   );
 };
+
+export default Navbar;

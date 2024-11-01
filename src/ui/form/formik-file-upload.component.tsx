@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Field, FieldProps, useFormikContext } from "formik";
 import { FieldContainer } from "./field-container.component";
 import { Input } from "@/components/ui/input";
@@ -16,6 +14,7 @@ type InputFieldProps = {
   error?: boolean;
   inputClassName?: string;
   id?: string;
+  inputRef?: React.RefObject<HTMLInputElement>; // New prop to receive ref
 };
 
 const InputField: React.FC<
@@ -28,6 +27,7 @@ const InputField: React.FC<
   helperText,
   inputClassName = "",
   id = "file-upload",
+  inputRef, // Receive inputRef prop
   ...rest
 }) => (
   <FieldContainer>
@@ -38,6 +38,7 @@ const InputField: React.FC<
       disabled={disabled}
       type="file"
       id={id}
+      ref={inputRef} // Attach ref to the input
       {...rest}
     />
     {helperText && (
@@ -57,8 +58,17 @@ export const FormikUploadField: React.FC<FormikUploadFieldProps> = ({
   inputFieldProps,
   name,
 }) => {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext<any>();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // Create ref for the file input
+
+  useEffect(() => {
+    // Get the existing image URL from Formik initial values
+    const existingImageUrl = values[name];
+    if (existingImageUrl) {
+      setPreviewUrl(existingImageUrl);
+    }
+  }, [values, name]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
@@ -73,15 +83,16 @@ export const FormikUploadField: React.FC<FormikUploadFieldProps> = ({
   const handleRemoveImage = () => {
     setFieldValue(name, null);
     setPreviewUrl(null);
+    if (inputRef.current) {
+      inputRef.current.value = ""; // Clear file input state
+    }
   };
 
   return (
     <Field name={name}>
-      {({
-        meta: { touched, error },
-        form: { isSubmitting },
-      }: FieldProps) => {
-        const helperText = touched && error ? error : inputFieldProps?.helperText;
+      {({ meta: { touched, error }, form: { isSubmitting } }: FieldProps) => {
+        const helperText =
+          touched && error ? error : inputFieldProps?.helperText;
 
         return (
           <div className="space-y-4">
@@ -91,6 +102,7 @@ export const FormikUploadField: React.FC<FormikUploadFieldProps> = ({
               helperText={helperText}
               disabled={inputFieldProps?.disabled || isSubmitting}
               onChange={handleFileChange}
+              inputRef={inputRef} // Pass ref to InputField
             />
             {previewUrl && (
               <div className="relative inline-block">
@@ -106,6 +118,7 @@ export const FormikUploadField: React.FC<FormikUploadFieldProps> = ({
                   size="icon"
                   className="absolute top-2 right-2"
                   onClick={handleRemoveImage}
+                  disabled={isSubmitting}
                 >
                   <X className="h-4 w-4" />
                 </Button>

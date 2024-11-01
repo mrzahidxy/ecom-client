@@ -3,14 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { StatusUpdateDialog } from "./user-role-update.component";
-import { useToast } from "@/hooks/use-toast";
 import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
+import { Suspense } from "react";
 
 type Props = {};
 
 const UserPage = (props: Props) => {
-  const { toast } = useToast();
-
   // Table columns
   const columns: ColumnDef<any>[] = [
     {
@@ -55,12 +53,14 @@ const UserPage = (props: Props) => {
   ];
 
   return (
-    <DynamicTable
-      columns={columns}
-      url="/users"
-      title="Users"
-      queryKey="usersList"
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <DynamicTable
+        columns={columns}
+        url="/users"
+        title="Users"
+        queryKey="usersList"
+      />
+    </Suspense>
   );
 };
 

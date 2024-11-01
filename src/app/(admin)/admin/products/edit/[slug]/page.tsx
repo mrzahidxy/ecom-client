@@ -1,9 +1,10 @@
 import { ProductCreateUpdate } from "../../add/product-create-update.component";
 
-function EditProductPage() {
+function EditProductPage({ params }: any) {
+
   return (
     <div>
-      <ProductCreateUpdate />
+      <ProductCreateUpdate id={params.slug} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import { StatusUpdateDialog } from "./order-status-update.component";
 import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
+import { Suspense } from "react";
 
 type Order = {
   id: number;
@@ -58,12 +59,14 @@ const columns: ColumnDef<Order>[] = [
 
 const ProductPage = () => {
   return (
-    <DynamicTable
-      title="Orders"
-      url="/orders"
-      columns={columns}
-      queryKey="ordersList"
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <DynamicTable
+        title="Orders"
+        url="/orders"
+        columns={columns}
+        queryKey="ordersList"
+      />
+    </Suspense>
   );
 };
 

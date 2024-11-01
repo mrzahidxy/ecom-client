@@ -20,8 +20,11 @@ export const Categories = () => {
               <div className="h-[300px] relative opacity-100 group-hover:opacity-80 transition ease-in-out">
                 <Image
                   src={category?.img}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "0% 10%",
+                  }}
                   alt={category.title}
                 />
               </div>

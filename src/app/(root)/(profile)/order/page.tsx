@@ -1,39 +1,29 @@
 "use client";
 
-import { DataTable } from "@/components/ui/data-table.component";
-import privateRequest from "@/healper/privateRequest";
+import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
 import { ColumnDef } from "@tanstack/react-table";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-
-import React, { useEffect, useState } from "react";
+import { Suspense } from "react";
 
 type Props = {};
+type Order = {
+  id: number;
+  netAmount: string;
+  address: string;
+  status: string;
+  createdAt: string;
+  user: { name: string };
+};
 
 const OrdersPage = (props: Props) => {
-  const [orders, setOrders] = useState<any[]>([]);
+  const session = useSession();
 
-  const fetchOrders = async () => {
-    const endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/orders`;
-    try {
-      const response = await privateRequest.get(endpoint);
-      // return response.data.data;
-      setOrders(response.data.data);
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const columns: ColumnDef<any>[] = [
+  const columns: ColumnDef<Order>[] = [
     {
       accessorKey: "id",
       header: "Id",
       cell: ({ row }) => {
-        console.log(row);
         return (
           <Link href={`/order/${row.original.id}`}>{row?.original?.id}</Link>
         );
@@ -56,7 +46,14 @@ const OrdersPage = (props: Props) => {
   return (
     <div className="container">
       <h4 className="font-semibold text-xl">Orders List</h4>
-      <DataTable columns={columns} data={orders} />
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <DynamicTable
+          url={`/orders/users/${session.data?.user?.id}`}
+          columns={columns}
+          queryKey="userOrderList"
+        />
+      </Suspense>
     </div>
   );
 };

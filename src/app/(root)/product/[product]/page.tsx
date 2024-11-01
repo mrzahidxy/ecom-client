@@ -45,7 +45,7 @@ const ProductPage = async ({ params }: Props) => {
   return (
     <div className="container space-y-16">
       <div className="grid grid-cols-3">
-        <div className="relative w-full">
+        <div className="relative w-full h-[400px]">
           <Image
             src={productData.image}
             alt={productData.name}

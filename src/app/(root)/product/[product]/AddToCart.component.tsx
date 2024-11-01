@@ -9,24 +9,15 @@ type CartComponentProps = {
 };
 
 const CartComponent: React.FC<CartComponentProps> = ({ productId }) => {
-  const [quantity, setQuantity] = useState(1); 
+  const [quantity, setQuantity] = useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
   const message = useCartStore((state) => state.message);
   const isLoading = useCartStore((state) => state.isLoading);
   const error = useCartStore((state) => state.error);
-  const clearMessage = useCartStore((state) => state.clearMessage);
 
-  console.log(message)
 
   const handleAddToCart = async () => {
     await addToCart(productId, quantity);
-
-    // Optionally, clear the message after some time
-    if (message || error) {
-      setTimeout(() => {
-        clearMessage();
-      }, 3000);
-    }
   };
 
   // Functions to handle quantity increase and decrease
@@ -39,9 +30,9 @@ const CartComponent: React.FC<CartComponentProps> = ({ productId }) => {
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-4">
         <Button
-          className="text-2xl bg-white text-black border-red-600 border-2 hover:bg-red-600 hover:text-white"
+          className="text-2xl text-white bg-red-400 hover:bg-red-600 border-none"
           onClick={decreaseQuantity}
           type="button"
           disabled={quantity <= 1}
@@ -50,7 +41,7 @@ const CartComponent: React.FC<CartComponentProps> = ({ productId }) => {
         </Button>
         <span className="text-xl font-medium">{quantity}</span>
         <Button
-          className="text-2xl bg-white text-black border-green-600 border-2 hover:bg-green-600 hover:text-white"
+          className="text-2xl bg-green-400 border-2 hover:bg-green-600 border-none"
           onClick={increaseQuantity}
           type="button"
         >

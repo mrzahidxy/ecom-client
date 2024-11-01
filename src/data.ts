@@ -25,19 +25,19 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    img: "https://res.cloudinary.com/mrzahidxy/image/upload/v1730444588/product_images/nnjfpgmjyaicmgszdb6g.jpg",
     title: "LADIES LOVE",
     category: "women",
   },
   {
     id: 2,
-    img: "https://www.prada.com/content/dam/pradabkg_products/G/GEC/GEC067/10GGF0008/GEC067_10GG_F0008_S_212_MDDA.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg://www.prada.com/content/dam/pradabkg_products/U/UCS/UCS414/11SRF0YRX/UCS414_11SR_F0YRX_S_221_MDDA.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    img: "https://res.cloudinary.com/mrzahidxy/image/upload/v1730444884/product_images/pqho9cvwf47px1ey81hi.jpg",
     title: "MENS STYLE",
     category: "men",
   },
   {
     id: 3,
-    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    img: "https://res.cloudinary.com/mrzahidxy/image/upload/v1730444465/product_images/farpdtyummoagm10nuk0.jpg",
     title: "LIGHT ACCESSORIES",
     category: "accessories",
   },

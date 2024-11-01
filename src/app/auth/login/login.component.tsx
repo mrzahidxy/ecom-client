@@ -9,16 +9,26 @@ import { signIn, useSession } from "next-auth/react";
 import { AppTitle } from "@/healper/common-string";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "@/hooks/use-toast";
+import { Link } from "lucide-react";
 
 export const Login = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const handleSubmit = async (values: LoginCreate) => {
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       redirect: false,
       ...values,
     });
+
+    if (res?.error) {
+      toast({
+        title: "Error",
+        description: res?.error,
+        variant: "destructive",
+      });
+    }
   };
 
   useEffect(() => {
@@ -48,12 +58,9 @@ export const Login = () => {
         <div className="text-xs flex justify-between mt-6">
           <span>Not a member?</span>
           <span>
-            <span
-              className="cursor-pointer font-semibold"
-              onClick={() => router.push("/auth/signin")}
-            >
+            <Link href="/auth/signup" className="cursor-pointer font-semibold">
               Join{" "}
-            </span>
+            </Link>
             to unlock the best of products.
           </span>
         </div>

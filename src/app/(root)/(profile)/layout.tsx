@@ -18,9 +18,6 @@ export default function DashboardLayout({
     }
   }, [status, router]);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
 
   return <main className="">{children}</main>;
 }

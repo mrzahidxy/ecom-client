@@ -7,6 +7,7 @@ import Image from "next/image";
 import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
 import { EditIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 // Define the product interface to type the data
 interface Product {
@@ -82,14 +83,16 @@ const columns: ColumnDef<Product>[] = [
 
 const ProductPage: React.FC = () => {
   return (
-    <DynamicTable<Product>
-      title="Products"
-      url="/products"
-      buttonText="Add Product"
-      addUrl="/admin/products/add"
-      columns={columns}
-      queryKey="productsList"
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <DynamicTable<Product>
+        title="Products"
+        url="/products"
+        buttonText="Add Product"
+        addUrl="/admin/products/add"
+        columns={columns}
+        queryKey="productsList"
+      />
+    </Suspense>
   );
 };
 

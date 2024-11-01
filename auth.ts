@@ -67,9 +67,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         name: token.name as string,
         email: token.email as string,
         role: token.role as string,
-        token: token.token as string, // Include access token in the session
+        token: token.token as string, 
       };
-      return session; // Return the updated session
+      return session; 
     },
   },
 });

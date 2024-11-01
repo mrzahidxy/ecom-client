@@ -14,6 +14,7 @@ import {
 } from "./pagination";
 import { Button } from "./button";
 import { DataTable } from "./data-table.component";
+import DefaultLoader from "../custom/DefaultLoacer.component";
 
 interface DynamicTableProps<TData> {
   url: string;
@@ -23,6 +24,7 @@ interface DynamicTableProps<TData> {
   buttonText?: string;
   queryKey: string;
 }
+
 
 export function DynamicTable<TData>({
   url,
@@ -53,7 +55,12 @@ export function DynamicTable<TData>({
   });
 
   // Display loading state
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w">
+        <DefaultLoader showImage={false} />
+      </div>
+    );
 
   // Display error state
   if (isError) return <div>Error fetching data: {error.message}</div>;
@@ -85,20 +92,14 @@ export function DynamicTable<TData>({
       )}
 
       {/* Data Table */}
-      <DataTable
-        columns={columns}
-        data={tableData}
-      />
+      <DataTable columns={columns} data={tableData} />
 
       {/* Pagination Controls */}
       {pagination?.totalPages > 1 && (
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious
-                onClick={() => handlePageChange(page - 1)}
-          
-              />
+              <PaginationPrevious onClick={() => handlePageChange(page - 1)} />
             </PaginationItem>
             {[...Array(pagination.totalPages)].map((_, index) => (
               <PaginationItem key={index}>
@@ -111,10 +112,7 @@ export function DynamicTable<TData>({
               </PaginationItem>
             ))}
             <PaginationItem>
-              <PaginationNext
-                onClick={() => handlePageChange(page + 1)}
-       
-              />
+              <PaginationNext onClick={() => handlePageChange(page + 1)} />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
