@@ -1,17 +1,13 @@
-
-
+import { publicRequest } from "@/healper/privateRequest";
 import { ProductCard } from "./Product-Card.component";
 import { TProduct } from "@/models";
-// import privateRequest, { publicRequest } from "@/healper/privateRequest";
-// import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 // Async function to fetch product data
 const fetchProduct = async (
   tags: string
 ): Promise<{ collection: TProduct[] } | null> => {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/products?tags=${tags}`);
+    const response = await publicRequest.get(`/products?tags=${tags}`);
     return response.data.data;
   } catch (error) {
     console.error("Failed to fetch product data:", error);
@@ -20,9 +16,8 @@ const fetchProduct = async (
 };
 
 // Product Page Component
-const Products = async  ({ tags="" }: { tags?: string }) => {
+const Products = async ({ tags = "" }: { tags?: string }) => {
   const productData = await fetchProduct(tags);
-
 
   if (!productData || productData.collection.length === 0) {
     return <div>Product not found</div>;
