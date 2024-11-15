@@ -18,6 +18,7 @@ type Order = {
 
 const OrdersPage = (props: Props) => {
   const session = useSession();
+  const userId = session?.data?.user?.id;
 
   const columns: ColumnDef<Order>[] = [
     {
@@ -48,11 +49,15 @@ const OrdersPage = (props: Props) => {
       <h4 className="font-semibold text-xl">Orders List</h4>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <DynamicTable
-          url={`/orders/users/${session.data?.user?.id}`}
-          columns={columns}
-          queryKey="userOrderList"
-        />
+        {userId ? (
+          <DynamicTable
+            url={`/orders/users/${Number(userId)}`}
+            columns={columns}
+            queryKey="userOrderList"
+          />
+        ) : (
+          <p className="text-gray-700">No orders found.</p>
+        )}
       </Suspense>
     </div>
   );

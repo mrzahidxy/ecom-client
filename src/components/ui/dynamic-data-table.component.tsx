@@ -14,7 +14,7 @@ import {
 } from "./pagination";
 import { Button } from "./button";
 import { DataTable } from "./data-table.component";
-import DefaultLoader from "../custom/DefaultLoacer.component";
+import DefaultLoader from "../common/DefaultLoacer.component";
 
 interface DynamicTableProps<TData> {
   url: string;

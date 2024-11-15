@@ -1,4 +1,4 @@
-import Products from "@/ui/common/Products.component";
+import Products from "@/components/common/Products.component";
 import { Categories } from "./Categories.component";
 import { MainBanner } from "./MainBanner.component";
 

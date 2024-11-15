@@ -2,9 +2,10 @@
 
 import privateRequest from "@/healper/privateRequest";
 import useCartStore from "@/store/useStore";
-import CustomButton from "@/ui/common/Button.component";
+import CustomButton from "@/components/common/Button.component";
 import CartList from "./Cart-list.component";
 import { useQuery } from "@tanstack/react-query";
+import { PageLoader } from "@/components/common/PageLoader.component";
 
 const CartPage = () => {
   const isLoading = useCartStore((state) => state.isLoading);
@@ -29,7 +30,7 @@ const CartPage = () => {
   });
 
   if (cartIsLoading) {
-    return <div>Loading...</div>;
+    return <PageLoader isLoading={cartIsLoading} />;
   }
 
   if (isError) {

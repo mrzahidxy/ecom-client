@@ -1,4 +1,4 @@
-import Products from "@/ui/common/Products.component";
+import Products from "@/components/common/Products.component";
 import Filter from "./Filter.component";
 
 type Props = {};

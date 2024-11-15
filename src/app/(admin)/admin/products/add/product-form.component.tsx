@@ -1,6 +1,7 @@
 import { Form } from "formik";
-import { FormikInputField, FormikSubmitButton } from "@/ui";
-import { FormikUploadField } from "@/ui/form/formik-file-upload.component";
+
+import { FormikUploadField } from "@/components/form/formik-file-upload.component";
+import { FormikInputField, FormikSubmitButton } from "@/components/form";
 // import { LoginCreateApiError } from "./form.config";
 
 interface LoginFormProps {

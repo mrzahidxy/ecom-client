@@ -1,4 +1,4 @@
-import CustomButton from "@/ui/common/Button.component";
+import CustomButton from "@/components/common/Button.component";
 import { FileSearch } from "lucide-react";
 import { FiDelete } from "react-icons/fi";
 

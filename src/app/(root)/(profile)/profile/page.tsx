@@ -7,7 +7,7 @@ import AddressModal from "./Adddress.component";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import DefaultLoader from "@/components/custom/DefaultLoacer.component";
+import DefaultLoader from "@/components/common/DefaultLoacer.component";
 import Address from "./Adddress.component";
 
 type Props = {};

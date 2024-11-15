@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 
 const ProductsComponent = dynamic(
-  () => import("@/ui/common/Products.component"),
+  () => import("@/components/common/Products.component"),
   { ssr: false }
 );
 const AddToCartComponent = dynamic(() => import("./AddToCart.component"), {
