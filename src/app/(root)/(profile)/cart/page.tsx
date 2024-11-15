@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const CartPage = () => {
   const isLoading = useCartStore((state) => state.isLoading);
   const message = useCartStore((state) => state.message);
+  const error = useCartStore((state) => state.error);
   const placeOrder = useCartStore((state) => state.placeOrder);
 
   const fetchCart = async () => {
@@ -69,6 +70,7 @@ const CartPage = () => {
           />
         </div>
         <p className="text-green-500">{message}</p>
+        <p className="text-red-500">{error}</p>
       </div>
     </div>
   );

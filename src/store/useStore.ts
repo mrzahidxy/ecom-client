@@ -18,12 +18,11 @@ interface CartState {
   isLoading: boolean;
   error: string | null;
   addToCart: (productId: number, quantity: number) => Promise<void>;
-  removeFromCart: (productId: number) => void;
   placeOrder: () => Promise<void>;
 }
 
 // Helper function to auto-clear message after delay
-const clearMessageAfterDelay = (set: any, delay = 3000) => {
+const clearNotification = (set: any, delay = 3000) => {
   setTimeout(() => set({ message: "", error: null }), delay);
 };
 
@@ -40,31 +39,29 @@ const useCartStore = create<CartState>()(
         addToCart: async (productId, quantity) => {
           set({ isLoading: true, error: null });
           try {
-            const { data } = await privateRequest.post("/carts", { productId, quantity });
+            const { data } = await privateRequest.post("/carts", {
+              productId,
+              quantity,
+            });
             if (data?.data) {
               set((state) => ({
                 cartItems: [...state.cartItems, data.data],
                 message: data.message,
                 isLoading: false,
               }));
-              clearMessageAfterDelay(set);
+              clearNotification(set);
             }
           } catch (error) {
             set({
-              message: `Failed to add to cart: ${axios.isAxiosError(error) ? error.response?.data?.message : (error as any).message}`,
+              error: `Failed to add to cart: ${
+                axios.isAxiosError(error)
+                  ? error.response?.data?.message
+                  : (error as any).message
+              }`,
               isLoading: false,
-              error: (error as any).message || "Unknown error",
             });
-            clearMessageAfterDelay(set);
+            clearNotification(set);
           }
-        },
-
-        removeFromCart: (productId) => {
-          set((state) => ({
-            cartItems: state.cartItems.filter((item) => item.productId !== productId),
-            message: "Removed from cart.",
-          }));
-          clearMessageAfterDelay(set);
         },
 
         placeOrder: async () => {
@@ -72,18 +69,25 @@ const useCartStore = create<CartState>()(
           try {
             const response = await privateRequest.post("/orders");
             if ([200, 201].includes(response.status)) {
-              set({ cartItems: [], message: "Order placed successfully!", isLoading: false });
+              set({
+                cartItems: [],
+                message: "Order placed successfully!",
+                isLoading: false,
+              });
             } else {
               set({ message: "Failed to place order.", isLoading: false });
             }
-            clearMessageAfterDelay(set);
+            clearNotification(set);
           } catch (error) {
             set({
-              message: `Failed to place order: ${axios.isAxiosError(error) ? error.response?.data?.message : (error as any).message}`,
+              error: `Failed to place order: ${
+                axios.isAxiosError(error)
+                  ? error.response?.data?.message
+                  : (error as any).message
+              }`,
               isLoading: false,
-              error: (error as any).message || "Unknown error",
             });
-            clearMessageAfterDelay(set);
+            clearNotification(set);
           }
         },
       }),
