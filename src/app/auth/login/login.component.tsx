@@ -12,7 +12,6 @@ import { useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import Link from "next/link";
 
-
 export const Login = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -48,6 +47,7 @@ export const Login = () => {
         <div className="mb-6">
           <p className="text-3xl">{AppTitle}</p>
           <h4 className="font-semibold text-2xl mb-1">Welcome back.</h4>
+          <p>mail:user@gmail.com; pass:12345678</p>
         </div>
         <Formik
           initialValues={InitialValue}
