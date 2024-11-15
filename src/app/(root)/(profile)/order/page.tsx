@@ -51,7 +51,7 @@ const OrdersPage = (props: Props) => {
       <Suspense fallback={<div>Loading...</div>}>
         {userId ? (
           <DynamicTable
-            url={`/orders/users/${Number(userId)}`}
+            url={`/orders/users/me`}
             columns={columns}
             queryKey="userOrderList"
           />

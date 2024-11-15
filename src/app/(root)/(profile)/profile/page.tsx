@@ -47,7 +47,7 @@ const Profile = (props: Props) => {
 
   const fetchOrders = async () => {
     const response = await privateRequest.get(
-      `/orders/users/${session.data?.user?.id}`
+      `/orders/users/me`
     );
     return response.data.data.collection;
   };
