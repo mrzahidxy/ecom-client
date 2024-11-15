@@ -7,7 +7,7 @@ interface SignInormProps {
   error?: any;
 }
 
-export function SignInForm({ error }: SignInormProps) {
+export function SignUpForm({ error }: SignInormProps) {
   return (
     <Form>
       <div className="flex flex-col gap-2 ">

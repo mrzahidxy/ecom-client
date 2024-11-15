@@ -10,7 +10,8 @@ import { AppTitle } from "@/healper/common-string";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
-import { Link } from "lucide-react";
+import Link from "next/link";
+
 
 export const Login = () => {
   const router = useRouter();

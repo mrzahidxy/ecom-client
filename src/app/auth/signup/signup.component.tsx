@@ -3,12 +3,13 @@
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { InitialValue, SignInRequest, SignInSchema } from "./form.config";
-import { SignInForm } from "./sigin.form.component";
+import { SignUpForm } from "./signup.form.component";
 import { publicRequest } from "@/healper/privateRequest";
 import { AppTitle } from "@/healper/common-string";
 import { useState } from "react";
+import Link from "next/link";
 
-export const SignIn = () => {
+export const SignUp = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -41,18 +42,15 @@ export const SignIn = () => {
           validationSchema={SignInSchema}
           onSubmit={handleSignupSubmit}
         >
-          <SignInForm />
+          <SignUpForm />
         </Formik>
 
         <div className="text-xs flex justify-between mt-6">
           <p>Already a member?</p>
           <p>
-            <span
-              className="cursor-pointer font-semibold"
-              onClick={() => router.push("/auth/login")}
-            >
-              Log in{" "}
-            </span>
+            <Link href={"/auth/login"} className="cursor-pointer font-semibold">
+              Log In{" "}
+            </Link>
             to explore best of Traveller.
           </p>
         </div>
