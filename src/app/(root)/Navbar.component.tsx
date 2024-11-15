@@ -33,14 +33,16 @@ export const Navbar: React.FC = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/cart" className="relative text-xl flex items-center">
-            <FiShoppingCart />
-            {cartItemsCount > 0 && (
-              <span className="absolute left-5 bottom-3 text-xs bg-blue-500 text-white px-1 rounded-full">
-                {cartItemsCount}
-              </span>
-            )}
-          </Link>
+          {session?.user.role === "USER" && (
+            <Link href="/cart" className="relative text-xl flex items-center">
+              <FiShoppingCart />
+              {cartItemsCount > 0 && (
+                <span className="absolute left-5 bottom-3 text-xs bg-blue-500 text-white px-1 rounded-full">
+                  {cartItemsCount}
+                </span>
+              )}
+            </Link>
+          )}
 
           {session?.user ? (
             <div className="relative flex items-center gap-1">
@@ -49,12 +51,22 @@ export const Navbar: React.FC = () => {
               </button>
               {isDropdownVisible && (
                 <div className="absolute z-50 right-[-10px]  top-[30px] mt-2 py-2 w-36 bg-white border border-gray-300 rounded shadow-lg">
-                  <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    Profile
-                  </Link>
-                  <Link href="/order" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    Orders
-                  </Link>
+                  {session?.user.role === "USER" && (
+                    <>
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Profile
+                      </Link>
+                      <Link
+                        href="/order"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Orders
+                      </Link>
+                    </>
+                  )}
                   <button
                     onClick={() => signOut()}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -65,7 +77,10 @@ export const Navbar: React.FC = () => {
               )}
             </div>
           ) : (
-            <Link href="/auth/login" className="flex items-center text-sm font-semibold">
+            <Link
+              href="/auth/login"
+              className="flex items-center text-sm font-semibold"
+            >
               <CiLogin className="text-xl" />
               <span>Login</span>
             </Link>
