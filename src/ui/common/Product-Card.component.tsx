@@ -26,6 +26,7 @@ export const ProductCard = ({
             fill
             className="object-contain"
             alt={title}
+            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         <h4 className="truncate text-gray-8000 text-lg font-semibold mt-2">

@@ -64,9 +64,6 @@ const Profile = (props: Props) => {
           <DefaultLoader />
         ) : (
           <div className="md:col-span-1 shadow p-6 ">
-            {/* <div className="relative w-full mb-2">
-              <CustomImage src="/placeholder.svg?height=200&width=200" width={200} height={200} />
-            </div> */}
             <div className="bg-white  rounded-lg space-y-4">
               <h2 className="text-2xl font-bold">User Information</h2>
               <div className="grid grid-cols-2 gap-2">

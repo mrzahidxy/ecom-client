@@ -23,7 +23,6 @@ const fetchProduct = async (
 const Products = async  ({ tags="" }: { tags?: string }) => {
   const productData = await fetchProduct(tags);
 
-  console.log(tags)
 
   if (!productData || productData.collection.length === 0) {
     return <div>Product not found</div>;

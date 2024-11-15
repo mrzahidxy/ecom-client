@@ -9,6 +9,7 @@ export const MainBanner = () => {
         style={{
           objectFit: 'cover', 
         }}
+        priority
         alt="main-banner"
       />
     </div>
