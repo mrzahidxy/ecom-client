@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -50,7 +50,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="#" className="text-sm text-muted-foreground hover:text-primary">
-                  Travelers' Choice
+                  Travelers&apos; Choice
                 </a>
               </li>
             </ul>
@@ -105,6 +105,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
-
