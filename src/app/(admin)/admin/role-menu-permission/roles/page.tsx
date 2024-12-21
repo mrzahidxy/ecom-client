@@ -1,8 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { StatusUpdateDialog } from "./user-role-update.component";
 import { DynamicTable } from "@/components/ui/dynamic-data-table.component";
 import { Suspense } from "react";
 
@@ -38,14 +36,14 @@ const UserPage = (props: Props) => {
     {
       accessorKey: "action",
       header: "Action",
-      cell: ({ row }) => {
-        return (
-          <div className="text-2xl cursor-pointer">
-            {/* Pass refetch to refresh data when status is updated */}
-            <StatusUpdateDialog id={row.original.id} />
-          </div>
-        );
-      },
+    //   cell: ({ row }) => {
+    //     return (
+    //       <div className="text-2xl cursor-pointer">
+    //         {/* Pass refetch to refresh data when status is updated */}
+    //         <StatusUpdateDialog id={row.original.id} />
+    //       </div>
+    //     );
+    //   },
     },
   ];
 

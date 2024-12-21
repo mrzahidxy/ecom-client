@@ -22,6 +22,7 @@ export const Login = () => {
       ...values,
     });
 
+
     if (res?.error) {
       toast({
         title: "Error",
@@ -31,13 +32,10 @@ export const Login = () => {
     }
   };
 
+
   useEffect(() => {
     if (status === "authenticated") {
-      if (session?.user?.role === "ADMIN") {
-        router.push("/admin");
-      } else if (session?.user?.role === "USER") {
-        router.push("/");
-      }
+      router.push("/");
     }
   }, [session]);
 
