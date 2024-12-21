@@ -1,7 +1,9 @@
 "use client";
 
-import Footer from "./Footer.component";
+
+import { Footer } from "./Footer.component";
 import { Navbar } from "./Navbar.component";
+
 
 
 interface RootLayoutProps {

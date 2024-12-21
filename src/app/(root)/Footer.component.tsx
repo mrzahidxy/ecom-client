@@ -1,56 +1,110 @@
-import { FiFacebook, FiInstagram, FiLinkedin, FiMapPin, FiShoppingCart } from "react-icons/fi";
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 
-export const Footer = () => {
+export function Footer() {
   return (
-    <footer className="bg-blue-100 py-10">
-      <div className="container">
-        <div className="space-y-4 md:grid md:grid-cols-3 gap-4">
-          {/** Column 1 */}
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-1 items-center text-2xl text-blue-500 font-semibold mb-2"><FiShoppingCart className=" text-red-500"/> BuyNow</div>
-            <div className="text-sm">
-              © {new Date().getFullYear()} BuyNow LLC All rights reserved.
-            </div>
-            <div className="flex items-center gap-1">
-              <FiMapPin /> Dhaka, Bangladesh
-            </div>
-            <div className="flex flex-row items-center gap-2">
-              <span>Follow us on: </span>
-              <FiFacebook className="cursor-pointer hover:text-blue-500 transition ease-in-out" />
-              <FiInstagram className="cursor-pointer hover:text-blue-500 transition ease-in-out" />
-              <FiLinkedin className="cursor-pointer hover:text-blue-500 transition ease-in-out" />
-            </div>
-          </div>
-
-          {/** Column 2 */}
+    <footer className="bg-gray-100">
+      <div className="container py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <ul className="flex gap-8 font-semibold mb-4">
-              <FooterLink text="Terms of Use" />
-              <FooterLink text="Privacy" />
-              <FooterLink text="Contact Us" />
+            <h3 className="font-semibold mb-4">About TripAdvisor</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Press
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Resources and Policies
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Careers
+                </a>
+              </li>
             </ul>
-            <div className="text-xs">
-             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque dolorem dolorum explicabo consectetur ut magnam voluptatibus voluptatum ullam pariatur labore.
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4">Explore</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Write a Review
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Add a Place
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Join
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Travelers' Choice
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4">Do Business With Us</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Owners
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Business Advantage
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Sponsored Placements
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-muted-foreground hover:text-primary">
+                  Access our Content API
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="text-muted-foreground hover:text-primary">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary">
+                <Youtube className="h-5 w-5" />
+              </a>
             </div>
           </div>
-
-          {/** Column 3 */}
-          <div className="mx-auto">
-            <ul className="font-semibold">
-              <FooterLink text="About Us" />
-              <FooterLink text="Trending Products" />
-              <FooterLink text="Top Search" />
-              <FooterLink text="Drop A Review" />
-            </ul>
-          </div>
+        </div>
+        <div className="mt-12 pt-8 border-t">
+          <p className="text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} TripAdvisor LLC All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-const FooterLink = ({ text }: { text: string }) => (
-  <li className="cursor-pointer underline">{text}</li>
-);
-
-export default Footer;

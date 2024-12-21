@@ -1,94 +1,56 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { FiShoppingCart } from "react-icons/fi";
-import { signOut, useSession } from "next-auth/react";
-import { CiLogin } from "react-icons/ci";
-import useCartStore from "@/store/useStore";
+import Link from "next/link"
+import { Search, MenuIcon, Heart, ShoppingBag } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export const Navbar: React.FC = () => {
-  const { data: session } = useSession();
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isFixedNavbar, setIsFixedNavbar] = useState(false);
-  const cartItemsCount = useCartStore((state) => state.cartItems.length);
-
-  useEffect(() => {
-    const handleScroll = () => setIsFixedNavbar(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleDropdown = () => setIsDropdownVisible((prev) => !prev);
-
+export function Navbar() {
   return (
-    <nav
-      className={`w-full py-3 px-3 md:px-10 shadow-md ${
-        isFixedNavbar ? "fixed z-50 bg-white" : ""
-      }`}
-    >
-      <div className="flex justify-between items-center container">
-        <a href="/" className="flex items-center gap-1 text-2xl font-semibold">
-          <FiShoppingCart className="text-blue-500" /> Buynow
-        </a>
-
-        <div className="hidden md:flex items-center gap-6">
-          {session?.user.role === "USER" && (
-            <Link href="/cart" className="relative text-xl flex items-center">
-              <FiShoppingCart />
-              {cartItemsCount > 0 && (
-                <span className="absolute left-5 bottom-3 text-xs bg-blue-500 text-white px-1 rounded-full">
-                  {cartItemsCount}
-                </span>
-              )}
-            </Link>
-          )}
-
-          {session?.user ? (
-            <div className="relative flex items-center gap-1">
-              <button onClick={toggleDropdown} className="text-lg">
-                {session.user.name}
-              </button>
-              {isDropdownVisible && (
-                <div className="absolute z-50 right-[-10px]  top-[30px] mt-2 py-2 w-36 bg-white border border-gray-300 rounded shadow-lg">
-                  {session?.user.role === "USER" && (
-                    <>
-                      <Link
-                        href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Profile
-                      </Link>
-                      <Link
-                        href="/order"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Orders
-                      </Link>
-                    </>
-                  )}
-                  <button
-                    onClick={() => signOut()}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              href="/auth/login"
-              className="flex items-center text-sm font-semibold"
-            >
-              <CiLogin className="text-xl" />
-              <span>Login</span>
-            </Link>
-          )}
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <div className="md:hidden">
+          <Button variant="ghost" size="icon">
+            <MenuIcon className="h-5 w-5" />
+          </Button>
+        </div>
+        <Link href="/" className="flex items-center space-x-2 ml-4 md:ml-0">
+          <span className="text-xl font-bold">TripAdvisor</span>
+        </Link>
+        <nav className="hidden md:flex items-center space-x-6 mx-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-sm font-medium">Discover</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Restaurants</DropdownMenuItem>
+              <DropdownMenuItem>Hotels</DropdownMenuItem>
+              <DropdownMenuItem>Things to Do</DropdownMenuItem>
+              <DropdownMenuItem>Vacation Rentals</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Link href="/trips" className="text-sm font-medium">
+            Trips
+          </Link>
+          <Link href="/reviews" className="text-sm font-medium">
+            Review
+          </Link>
+          <Link href="/alerts" className="text-sm font-medium">
+            Alerts
+          </Link>
+        </nav>
+        <div className="flex items-center space-x-4 ml-auto">
+          <Button variant="ghost" size="icon">
+            <Search className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <Heart className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <ShoppingBag className="h-5 w-5" />
+          </Button>
+          <Button>Sign in</Button>
         </div>
       </div>
-    </nav>
-  );
-};
+    </header>
+  )
+}
 
-export default Navbar;
