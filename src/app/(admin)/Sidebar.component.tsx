@@ -13,6 +13,7 @@ const Sidebar = (props: Props) => {
     { href: "/admin", label: "Dashboard", icon: <FiBarChart2 /> },
     { href: "/admin/users", label: "User", icon: <FiUser /> },
     { href: "/admin/products", label: "Product", icon: <FiBox /> },
+    { href: "/admin/promotions", label: "Promotion", icon: <FiShoppingCart /> },
     { href: "/admin/orders", label: "Order", icon: <FiShoppingCart /> },
   ];
 

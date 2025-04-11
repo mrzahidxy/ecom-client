@@ -37,11 +37,19 @@ const CartPage = () => {
     return <div>Error fetching data.</div>;
   }
 
-  let totalPrice = 0;
+  const totalPrice = carts.reduce((total: number, item: any) => {
+    return total + parseInt(item?.product?.price) * item?.quantity;
+  }, 0);
 
-  for (const item of carts) {
-    totalPrice += item.quantity * parseInt(item.product.price, 10);
-  }
+  const discount = carts.reduce((total: number, item: any) => {
+    const itemDiscount =
+      item?.product?.promotion?.type === "PERCENTAGE"
+        ? (item?.product?.promotion?.discount / 100) *
+          parseInt(item.product.price, 10) *
+          item.quantity
+        : item?.product?.promotion?.discount * item.quantity;
+    return total + (itemDiscount || 0);
+  }, 0);
 
   const handleOrder = async () => {
     await placeOrder();
@@ -57,9 +65,9 @@ const CartPage = () => {
         <div className="grid grid-cols-2 space-y-2">
           <span>Sub-total</span> <span>{totalPrice}</span>
           <span>Shipping Charge</span> <span>0</span>
-          <span>Discount</span> <span>0</span>
+          <span>Discount</span> <span>{discount}</span>
           <span className="font-semibold text-xl">Total</span>{" "}
-          <span className="font-semibold text-xl">{totalPrice}</span>
+          <span className="font-semibold text-xl">{totalPrice - discount}</span>
         </div>
 
         <div className="space-x-4 pt-4">

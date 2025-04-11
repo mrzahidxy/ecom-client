@@ -1,4 +1,3 @@
-;
 import { TProduct } from "@/models";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -42,6 +41,7 @@ const ProductPage = async ({ params }: Props) => {
     return <div>Product not found</div>;
   }
 
+
   return (
     <div className="container space-y-16">
       <div className="grid grid-cols-3">
@@ -58,6 +58,18 @@ const ProductPage = async ({ params }: Props) => {
           <h1 className="font-semibold text-xl">{productData.name}</h1>
           <p>{productData.description}</p>
           <h4 className="font-semibold text-xl">${productData.price}</h4>
+
+          <div className="flex">
+         
+              <div
+                key={productData?.promotion?.id}
+                className="flex flex-col bg-red-500 text-xs text-white py-1 px-2 rounded-sm"
+              >
+                <span>{productData?.promotion?.code ?? ""}</span>
+                <span>Discount: {productData?.promotion?.discount} BDT</span>
+              </div>
+    
+          </div>
 
           {/* <select name="color" className="w-36 border rounded-sm p-1 mr-6">
             {productData.color.map((color, index) => (

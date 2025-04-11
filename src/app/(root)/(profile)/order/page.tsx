@@ -23,7 +23,7 @@ const OrdersPage = (props: Props) => {
   const columns: ColumnDef<Order>[] = [
     {
       accessorKey: "id",
-      header: "Id",
+      header: "Order Id",
       cell: ({ row }) => {
         return (
           <Link href={`/order/${row.original.id}`}>{row?.original?.id}</Link>

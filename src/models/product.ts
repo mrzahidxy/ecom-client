@@ -5,8 +5,23 @@ export type TProduct = {
   price: string; 
   tags: string;
   image: string;
+  promotion: TPromotion;
   createdAt: string;
   updateAt: string;
+};
+
+export type TPromotion = {
+  id: string;
+  code: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  type: string;
+  discount: number | null;
+  slabs: string | null;
+  enabled: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TProductAPIResponse =  {

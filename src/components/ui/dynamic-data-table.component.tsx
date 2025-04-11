@@ -25,7 +25,6 @@ interface DynamicTableProps<TData> {
   queryKey: string;
 }
 
-
 export function DynamicTable<TData>({
   url,
   addUrl,
@@ -67,10 +66,10 @@ export function DynamicTable<TData>({
 
   const { collection: tableData, pagination } = data?.data;
 
-  // Display no data state
-  if (!tableData || tableData.length === 0) {
-    return <div>No data available</div>;
-  }
+  // // Display no data state
+  // if (!tableData || tableData.length === 0) {
+  //   return <div>No data available</div>;
+  // }
 
   // Handle pagination changes
   const handlePageChange = (newPage: number) => {
@@ -90,9 +89,13 @@ export function DynamicTable<TData>({
           {buttonText}
         </Button>
       )}
-
-      {/* Data Table */}
-      <DataTable columns={columns} data={tableData} />
+      {tableData?.length > 0 ? (
+        <DataTable columns={columns} data={tableData} />
+      ) : (
+        <div className="flex items-center justify-center">
+          <h1 className="text-xl ">No Data Found</h1>
+        </div>
+      )}
 
       {/* Pagination Controls */}
       {pagination?.totalPages > 1 && (
