@@ -30,7 +30,7 @@ interface Promotion {
   type: string;
   discount: number | null;
   slabs: string | null;
-  enabled: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   products: {
@@ -55,8 +55,7 @@ const PromotionList: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get("enabled") || "true"; // Default to "active" products
-
+  
   // Handles product status changes
   const handlePromotionStatusChange = async (
     promotionId: string,
@@ -140,9 +139,9 @@ const PromotionList: React.FC = () => {
       header: "Enabled",
       cell: ({ row }) => (
         <span
-          className={row.original.enabled ? "text-green-500" : "text-red-500"}
+          className={row.original.isActive ? "text-green-500" : "text-red-500"}
         >
-          {row.original.enabled ? "Enabled" : "Disabled"}
+          {row.original.isActive ? "Active" : "Inactive"}
         </span>
       ),
     },
@@ -153,7 +152,9 @@ const PromotionList: React.FC = () => {
         <ul className="list-disc pl-4">
           {row.original.products.map((product) => (
             <li key={product.product.id}>
-              {product.product.name} - {product.product.description}
+              {product.product.name.length > 20
+                ? product.product.name.slice(0, 20) + "..."
+                : product.product.name} 
             </li>
           ))}
         </ul>
@@ -179,7 +180,7 @@ const PromotionList: React.FC = () => {
                 <AlertDialogTitle>Confirm Action</AlertDialogTitle>
                 <AlertDialogDescription>
                   Are you sure you want to{" "}
-                  {row.original.enabled ? "disable" : "enable"} this promotion?
+                  {row.original.isActive ? "disable" : "enable"} this promotion?
                   This action cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -189,11 +190,11 @@ const PromotionList: React.FC = () => {
                   onClick={() =>
                     handlePromotionStatusChange(
                       row.original.id,
-                      row.original.enabled
+                      row.original.isActive
                     )
                   }
                 >
-                  {row.original.enabled ? "Disable" : "Enable"}
+                  {row.original.isActive ? "Inactivate" : "Active"}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
