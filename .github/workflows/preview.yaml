@@ -1,16 +1,9 @@
-name: Vercel Preview Deploment
-
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-  on:
-  # Manual run button in Actions UI
-  workflow_dispatch:
-
-  # Existing trigger
+name: Vercel Preview Deployment
 
 on:
+  # Manual “Run workflow” button
+  workflow_dispatch:
+  # Auto on pushes to non-main branches
   push:
     branches-ignore:
       - main
@@ -18,13 +11,31 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    env:
+      VERCEL_ORG_ID:    ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN:     ${{ secrets.VERCEL_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
-      - name: install Vercel CLI
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: pull Vercel environment information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: build project artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: deploy project artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Pull Vercel env (Preview)
+        if: github.ref != 'refs/heads/main'
+        run: vercel env pull .env.local --environment=preview --token=$VERCEL_TOKEN
+
+      - name: Pull Vercel env (Production)
+        if: github.ref == 'refs/heads/main'
+        run: vercel env pull .env.local --environment=production --token=$VERCEL_TOKEN
+
+      - name: Build project
+        run: vercel build --token=$VERCEL_TOKEN
+
+      - name: Deploy to Vercel
+        run: vercel deploy --prebuilt --token=$VERCEL_TOKEN
