@@ -4,6 +4,12 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+  on:
+  # Manual run button in Actions UI
+  workflow_dispatch:
+
+  # Existing trigger
+
 on:
   push:
     branches-ignore:
